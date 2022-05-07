@@ -15,10 +15,10 @@ const Navbar = ({title}) => {
         </div>
         <div className="flex-1 px-2 mx">
             <div className="flex justify-end">
-                <Link to={"/"} className="btn btn-ghost btn-sm rounded-btn text-white">
+                <Link to="/" className="btn btn-ghost btn-sm rounded-btn text-white">
                     Home
                 </Link>
-                <Link to={"/about"} className="btn btn-ghost btn-sm rounded-btn text-white">
+                <Link to="/about" className="btn btn-ghost btn-sm rounded-btn text-white">
                     About
                 </Link>
             </div>
