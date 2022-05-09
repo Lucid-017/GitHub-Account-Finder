@@ -1,11 +1,12 @@
+import UserResults from "../users/UserResults"
 const Home = () => {
   return (
-    <div>
-        <h1 className="text-6xl ">Welcome</h1>
+    <>
+        <UserResults/>
         {/* testing the environment variable */}
         {/* {process.env.REACT_APP_GITHUB_CODE} */}
         
-    </div>
+    </>
   )
 }
 
