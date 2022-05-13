@@ -1,4 +1,5 @@
 import {createContext,useReducer} from 'react'
+import { useSearchParams } from 'react-router-dom'
 import githubReducer from './GithubReducer'
 
 const GIthubContext = createContext()
@@ -18,17 +19,22 @@ export const GithubProvider= ({children})=>{
     /* NOTE dispatch is very much like usestates's setstate scenario
     but for dispatch it is used to dispatch an action to our reducer*/
     const [state,dispatch] =useReducer(githubReducer,initialState)
+   
 
-    // get initial users (testing purposes)
-    const fetchUsers = async () =>{
+    // Search users
+    const searchUsers = async (text) =>{
+        const params = new URLSearchParams({
+            q:text,
+        })
     setLoading()
-    const response = await fetch(`${GITHUB_URL}/users`,)
-    const data = await response.json()
+    const response = await fetch(`${GITHUB_URL}/search/users?${params}`,)
+    // we want to destructure the response object and get the items array
+    const {items} = await response.json()
     
     // now we are dispatching the type get users and sending data as payload
     dispatch({
         type:"GET_USERS",
-        payload:data
+        payload:items
     })
 }   
 // set loading
@@ -41,7 +47,7 @@ export const GithubProvider= ({children})=>{
 return <GIthubContext.Provider value={{
     users: state.users,
     loading:state.loading,
-    fetchUsers
+    searchUsers
 }}>
     {children}
 </GIthubContext.Provider>

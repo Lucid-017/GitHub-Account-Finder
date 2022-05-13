@@ -2,7 +2,7 @@ import { useState,useContext } from "react"
 import GIthubContext from "../../../context/github/GIthubContext"
 const UserSearch = () => {
     const [text,setText]=useState('')
-    const {users}=useContext(GIthubContext)
+    const {users,searchUsers}=useContext(GIthubContext)
 
     const handleChange = (e)=>setText(e.target.value)
 
@@ -11,7 +11,7 @@ const UserSearch = () => {
         if(text ===''){
             alert('please enter something')
         }else{
-            // TODO -search users
+            searchUsers(text)
         }
         setText('')
     }
