@@ -2,7 +2,7 @@ import { useState,useContext } from "react"
 import GIthubContext from "../../../context/github/GIthubContext"
 const UserSearch = () => {
     const [text,setText]=useState('')
-    const {users,searchUsers}=useContext(GIthubContext)
+    const {users,searchUsers,setClearUsers}=useContext(GIthubContext)
 
     const handleChange = (e)=>setText(e.target.value)
 
@@ -15,6 +15,9 @@ const UserSearch = () => {
         }
         setText('')
     }
+
+
+
   return (
     <div className="grid grid-cols-1 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 mb-8 gap-8">
         <div>
@@ -33,7 +36,7 @@ const UserSearch = () => {
         </div>
         {users.length > 0 && (
              <div>
-             <button className="btn-ghost btn-lg">
+             <button onClick={setClearUsers} className="btn-ghost btn-lg">
                  Clear
              </button>
          </div>

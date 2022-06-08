@@ -27,7 +27,11 @@ export const GithubProvider= ({children})=>{
             q:text,
         })
     setLoading()
-    const response = await fetch(`${GITHUB_URL}/search/users?${params}`,)
+    const response = await fetch(`${GITHUB_URL}/search/users?${params}`,{
+        headers:{
+            Authorization: `${GITHUB_TOKEN}`
+        }
+    })
     // we want to destructure the response object and get the items array
     const {items} = await response.json()
     
@@ -43,11 +47,18 @@ export const GithubProvider= ({children})=>{
             type:"SET_LOADING"
         })
     }
+// clear users
+    const setClearUsers =()=>{
+        dispatch({
+            type:"CLEAR_USERS"
+        })
+    }
 
 return <GIthubContext.Provider value={{
     users: state.users,
     loading:state.loading,
-    searchUsers
+    searchUsers ,
+    setClearUsers
 }}>
     {children}
 </GIthubContext.Provider>
