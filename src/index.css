@@ -4,3 +4,8 @@
 
 body{
     color: white;}
+
+.custom-card-image .card.image-full:before{
+    border-radius: .5rem;
+    opacity: .4;
+}

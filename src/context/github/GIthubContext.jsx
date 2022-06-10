@@ -10,6 +10,7 @@ const GITHUB_TOKEN = process.env.REACT_APP_GITHUB_CODE
 export const GithubProvider= ({children})=>{
     const initialState={
         users:[],
+        user:{},
         /*now that the fetchUser() testing function is removed
         we dont want an endless display of the loading component
         so we will set it to false but initiate once again anytime 
@@ -40,7 +41,35 @@ export const GithubProvider= ({children})=>{
         type:"GET_USERS",
         payload:items
     })
-}   
+}  
+
+
+// we need a function that makes a request to gete a specific user
+// then call an action in our reducer to add new user to the state
+    // get single user
+    const getUser = async (login) =>{
+        
+    setLoading()
+    const response = await fetch(`${GITHUB_URL}/users/${login}`,{
+        headers:{
+            Authorization: `${GITHUB_TOKEN}`
+        }
+    })
+    // if the user doesnt exist
+    if(response.status ===404){
+        window.location = '/notfound'
+    }else{
+         const data = await response.json()
+    
+    // now we are dispatching the type get single user and sending data as payload
+    dispatch({
+        type:"GET_USER",
+        payload:data,
+    })
+    }
+    
+}  
+
 // set loading
     const setLoading =()=>{
         dispatch({
@@ -56,9 +85,11 @@ export const GithubProvider= ({children})=>{
 
 return <GIthubContext.Provider value={{
     users: state.users,
+    user: state.user,
     loading:state.loading,
     searchUsers ,
-    setClearUsers
+    setClearUsers,
+    getUser
 }}>
     {children}
 </GIthubContext.Provider>
