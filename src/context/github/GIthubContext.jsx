@@ -23,27 +23,7 @@ export const GithubProvider= ({children})=>{
     const [state,dispatch] =useReducer(githubReducer,initialState)
    
 
-    // Search users
-    const searchUsers = async (text) =>{
-        const params = new URLSearchParams({
-            q:text,
-        })
-    setLoading()
-    const response = await fetch(`${GITHUB_URL}/search/users?${params}`,{
-        headers:{
-            Authorization: `${GITHUB_TOKEN}`
-        }
-    })
-    // we want to destructure the response object and get the items array
-    const {items} = await response.json()
-    
-    // now we are dispatching the type get users and sending data as payload
-    dispatch({
-        type:"GET_USERS",
-        payload:items
-    })
-}  
-
+ 
 
 // we need a function that makes a request to gete a specific user
 // then call an action in our reducer to add new user to the state
@@ -107,11 +87,8 @@ export const GithubProvider= ({children})=>{
     }
 
 return <GIthubContext.Provider value={{
-    users: state.users,
-    user: state.user,
-    repos: state.repos,
-    loading:state.loading,
-    searchUsers ,
+    ...state,
+    dispatch,
     setClearUsers,
     getUser,
     getUserRepo,
