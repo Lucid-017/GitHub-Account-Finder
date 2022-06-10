@@ -2,9 +2,11 @@ import { useState,useContext } from "react"
 import GIthubContext from "../../../context/github/GIthubContext"
 import AlertContext from "../../../context/github/alert/AlertContext"
 import {searchUsers} from "../../../context/GithubActions"
+
+
 const UserSearch = () => {
     const [text,setText]=useState('')
-    const {users,setClearUsers,dispatch}=useContext(GIthubContext)
+    const {users,dispatch}=useContext(GIthubContext)
     const {setAlert}=useContext(AlertContext)
 
     const handleChange = (e)=>setText(e.target.value)
@@ -46,7 +48,7 @@ const UserSearch = () => {
         </div>
         {users.length > 0 && (
              <div>
-             <button onClick={setClearUsers} className="btn-ghost btn-lg">
+             <button onClick={()=>dispatch({type:"CLEAR_USERS"})} className="btn-ghost btn-lg">
                  Clear
              </button>
          </div>
