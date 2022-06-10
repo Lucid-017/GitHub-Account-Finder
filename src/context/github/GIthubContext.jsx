@@ -11,6 +11,7 @@ export const GithubProvider= ({children})=>{
     const initialState={
         users:[],
         user:{},
+        repos:[],
         /*now that the fetchUser() testing function is removed
         we dont want an endless display of the loading component
         so we will set it to false but initiate once again anytime 
@@ -69,6 +70,28 @@ export const GithubProvider= ({children})=>{
     }
     
 }  
+// we need a function that makes a request to get a specific user repo
+// then call an action in our reducer to add new user to the state
+    // get single user repo
+    const getUserRepo = async (login) =>{
+        
+    setLoading()
+    const response = await fetch(`${GITHUB_URL}/users/${login}/repos`,{
+        headers:{
+            Authorization: `${GITHUB_TOKEN}`
+        }
+    })
+         const data = await response.json()
+         console.log(data)
+    
+    // now we are dispatching the type get single user and sending data as payload
+    dispatch({
+        type:"GET_USER_REPO",
+        payload:data,
+    })
+    
+    
+}  
 
 // set loading
     const setLoading =()=>{
@@ -86,10 +109,12 @@ export const GithubProvider= ({children})=>{
 return <GIthubContext.Provider value={{
     users: state.users,
     user: state.user,
+    repos: state.repos,
     loading:state.loading,
     searchUsers ,
     setClearUsers,
-    getUser
+    getUser,
+    getUserRepo,
 }}>
     {children}
 </GIthubContext.Provider>
