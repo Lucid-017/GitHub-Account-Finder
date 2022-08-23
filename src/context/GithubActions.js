@@ -1,5 +1,5 @@
 import axios from "axios"
-require('dotenv').config()
+// require('dotenv').config() this somehow causes an error block in the code, review later
 const GITHUB_URL = process.env.REACT_APP_GITHUB_URL
 const GITHUB_TOKEN = process.env.REACT_APP_GITHUB_CODE
 
